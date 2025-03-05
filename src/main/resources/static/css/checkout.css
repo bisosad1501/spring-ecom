@@ -1,0 +1,108 @@
+.checkout-section {
+    padding: 50px 15px;
+    background-color: #1a1919;
+    color: #ffffff;
+}
+
+.checkout-section h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    color: #ffffff;
+}
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.cart-summary, .shipping-info, .payment-info {
+    background-color: #333333;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.cart-summary h2, .shipping-info h2, .payment-info h2 {
+    color: #fa3030;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.cart-table th, .cart-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #555555;
+}
+
+.cart-table th {
+    background-color: #444444;
+}
+
+.cart-table td {
+    background-color: #333333;
+}
+
+.cart-total {
+    font-size: 1.2rem;
+    color: #ffffff;
+    text-align: right;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    background-color: #444444;
+    color: #ffffff;
+}
+
+.form-group input::placeholder {
+    color: #bbbbbb;
+}
+
+.form-group select {
+    cursor: pointer;
+}
+
+.confirm-order {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.confirm-order .btn-primary {
+    background-color: #fa3030;
+    color: #ffffff;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-order .btn-primary:hover {
+    background-color: #e24d4d;
+}

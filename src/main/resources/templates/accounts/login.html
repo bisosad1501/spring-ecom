@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+<div class="container">
+    <div class="forms-container">
+        <div class="signin-signup">
+            <!-- Đăng nhập -->
+            <form th:action="@{/accounts/login}" method="POST" class="sign-in-form">
+                <h2 class="title">Đăng Nhập</h2>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="username" placeholder="Tên người dùng" required />
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" placeholder="Mật khẩu" required />
+                </div>
+                <button type="submit" class="btn">Đăng Nhập</button>
+                <a href="/forgot-password" class="forgot-password">Quên mật khẩu?</a>
+                <p class="social-text">Hoặc đăng nhập với</p>
+                <div class="social-media">
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-google"></i>
+                    </a>
+                </div>
+            </form>
+
+            <!-- Đăng ký -->
+            <form th:action="@{/accounts/register}" method="POST" class="sign-up-form">
+                <h2 class="title">Đăng Ký</h2>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="username" placeholder="Tên người dùng" required />
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Email" required />
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" placeholder="Mật khẩu" required />
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="name" placeholder="Họ và Tên" required />
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" name="address" placeholder="Địa chỉ" required />
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" name="phone" placeholder="Số điện thoại" pattern="[0-9]{10,}" required />
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-calendar-alt"></i> <!-- Biểu tượng cho ngày sinh -->
+                    <input type="date" name="dateOfBirth" required /> <!-- Trường cho ngày sinh -->
+                </div>
+                <button type="submit" class="btn">Đăng Ký</button>
+                <p class="social-text">Hoặc đăng ký với</p>
+                <div class="social-media">
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-google"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Màn hình trái -->
+    <div class="panels-container">
+        <div class="panel left-panel">
+            <div class="content">
+                <h3>Chưa có tài khoản?</h3>
+                <p>Hãy đăng ký ngay để trải nghiệm những tính năng tuyệt vời.</p>
+                <button class="btn transparent" id="sign-up-btn">Đăng Ký</button>
+            </div>
+            <img src="/images/signup.svg" class="image" alt="Image">
+        </div>
+
+        <!-- Màn hình phải -->
+        <div class="panel right-panel">
+            <div class="content">
+                <h3>Đã có tài khoản?</h3>
+                <p>Hãy đăng nhập để tiếp tục trải nghiệm.</p>
+                <button class="btn transparent" id="sign-in-btn">Đăng Nhập</button>
+            </div>
+            <img src="/images/login.svg" class="image" alt="Image">
+        </div>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script>
+    // Chuyển chế độ giữa đăng nhập và đăng ký
+    const signUpBtn = document.getElementById('sign-up-btn');
+    const signInBtn = document.getElementById('sign-in-btn');
+    const container = document.querySelector('.container');
+
+    signUpBtn.addEventListener('click', () => {
+        container.classList.add('sign-up-mode');
+    });
+
+    signInBtn.addEventListener('click', () => {
+        container.classList.remove('sign-up-mode');
+    });
+</script>
+</body>
+</html>

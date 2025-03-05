@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart - E-Commerce</title>
+  <link rel="stylesheet" href="/Users/bisosad/kiemtra1/kt2/src/main/resources/static/css/cart.css">
+  <link rel="stylesheet" href="/Users/bisosad/kiemtra1/kt2/src/main/resources/static/css/style.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="js/wow.min.js"></script>
+</head>
+
+<body>
+<!-- Header -->
+<header>
+  <div class="container">
+    <div class="logo">
+      <a href="/static">Shop<span>Easy</span></a>
+    </div>
+    <nav class="nav">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/products">Products</a></li>
+        <li class="dropdown">
+          <a href="/categories">Categories</a>
+          <ul class="dropdown-menu">
+            <li><a href="/categories/electronics">Electronics</a>
+              <ul class="sub-menu">
+                <li><a href="/categories/electronics/mobile-phones">Mobile Phones</a></li>
+                <li><a href="/categories/electronics/laptops">Laptops</a></li>
+                <li><a href="/categories/electronics/cameras">Cameras</a></li>
+              </ul>
+            </li>
+            <li><a href="/categories/books">Books</a></li>
+            <li><a href="/categories/clothing">Clothing</a>
+              <ul class="sub-menu">
+                <li><a href="/categories/clothing/tshirts">T-Shirts</a></li>
+                <li><a href="/categories/clothing/jackets">Jackets</a></li>
+                <li><a href="/categories/clothing/dresses">Dresses</a></li>
+              </ul>
+            </li>
+            <li><a href="/categories/shoes">Shoes</a>
+              <ul class="sub-menu">
+                <li><a href="/categories/shoes/casual">Casual Shoes</a></li>
+                <li><a href="/categories/shoes/sports">Sports Shoes</a></li>
+                <li><a href="/categories/shoes/formal">Formal Shoes</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="/carts/view">Cart</a></li>
+      </ul>
+    </nav>
+    <div class="user-menu">
+      <!-- Hiển thị nếu có loggedInUser -->
+      <div th:if="${loggedInUser != null}">
+        <div class="dropdown">
+          <!-- Hiển thị username -->
+          <a href="#" class="user">Hello, <span th:text="${loggedInUser.username}"></span></a>
+          <div class="dropdown-content">
+            <a href="/profile">Xem thông tin cá nhân</a>
+            <a href="/logout">Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+      <!-- Hiển thị nút Đăng nhập / Đăng ký nếu chưa có loggedInUser -->
+      <div th:if="${loggedInUser == null}">
+        <a href="/accounts/login" class="user">Đăng Nhập / Đăng Ký</a>
+      </div>
+  </div>
+</header>
+
+
+<section class="cart-section">
+  <div class="container">
+    <h2 class="cart-title">Your Shopping Cart</h2>
+    <table class="cart-table">
+      <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="cartItem : ${cart.cartItems}">
+        <td class="product-name">
+          <div class="product-info">
+            <img th:src="${cartItem.product.imageUrl}" alt="Product Image">
+            <span th:text="${cartItem.product.name}">Product Name</span>
+          </div>
+        </td>
+        <td class="product-quantity">
+          <form th:action="@{/carts/update/{id}(id=${cartItem.id})}" method="post">
+            <input type="number" name="quantity" th:value="${cartItem.quantity}" min="1">
+            <button class="btn-update" type="submit">Update</button>
+          </form>
+        </td>
+        <td class="product-price" th:text="${cartItem.product.price}">$0.00</td>
+        <td class="product-total" th:text="${cartItem.product.price * cartItem.quantity}">$0.00</td>
+        <td>
+          <form th:action="@{/carts/remove/{id}(id=${cartItem.id})}" method="post">
+            <button class="btn-remove" type="submit">Remove</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="cart-summary">
+      <p>Total Amount: <span class="total-amount" th:text="${cart.totalAmount}">$0.00</span></p>
+      <a href="/checkout" class="btn-checkout">Proceed to Checkout</a>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="content">
+      <div class="box form wow slideInLeft">
+        <form action="/contact" method="POST">
+          <input type="text" name="name" placeholder="Enter Name" required>
+          <input type="email" name="email" placeholder="Enter Email" required>
+          <textarea name="message" placeholder="Enter Message" required></textarea>
+          <button type="submit" class="btn-secondary">Send Message</button>
+        </form>
+      </div>
+      <div class="box text wow slideInRight">
+        <h2>Get Connected with Us</h2>
+        <p>We are here to help you find the best products and services. Contact us today!</p>
+        <ul>
+          <li><span class="fa fa-map-marker"></span> 123 Main Street, Anytown</li>
+          <li><span class="fa fa-phone"></span> +1 234 567 890</li>
+          <li><span class="fa fa-envelope"></span> support@shopeasy.com</li>
+        </ul>
+        <div class="social">
+          <a href="#"><span class="fa fa-facebook"></span></a>
+          <a href="#"><span class="fa fa-instagram"></span></a>
+          <a href="#"><span class="fa fa-twitter"></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>&copy; 2025 ShopEasy. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  new WOW().init();
+</script>
+</body>
+
+</html>

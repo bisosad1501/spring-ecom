@@ -1,0 +1,174 @@
+CREATE DATABASE ecommerce_db;
+USE ecommerce_db;
+
+CREATE TABLE Account (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    role VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Author (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    bio VARCHAR(500),
+    dob DATE
+);
+
+CREATE TABLE Publisher (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    address VARCHAR(255),
+    phone VARCHAR(15)
+);
+
+CREATE TABLE Category (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
+    parentCategoryID BIGINT,
+    FOREIGN KEY (parentCategoryID) REFERENCES Category(id)
+);
+
+CREATE TABLE Size (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    value VARCHAR(10) NOT NULL,
+    description VARCHAR(255)
+);
+
+CREATE TABLE Type (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(255)
+);
+
+CREATE TABLE Product (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(500),
+    price DECIMAL(10, 2) NOT NULL,
+    stockCount INT NOT NULL,
+    categoryid BIGINT,
+    imageUrl VARCHAR(255),
+    is_featured BOOLEAN NOT NULL,
+    FOREIGN KEY (categoryid) REFERENCES Category(id)
+);
+
+CREATE TABLE Clothes (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    sizeID BIGINT,
+    typeID BIGINT,
+    material VARCHAR(100),
+    FOREIGN KEY (sizeID) REFERENCES Size(id),
+    FOREIGN KEY (typeID) REFERENCES Type(id)
+);
+
+CREATE TABLE Shoes (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    sizeID BIGINT,
+    typeID BIGINT,
+    material VARCHAR(100),
+    FOREIGN KEY (sizeID) REFERENCES Size(id),
+    FOREIGN KEY (typeID) REFERENCES Type(id)
+);
+
+CREATE TABLE Electronics (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    brand VARCHAR(100),
+    typeID BIGINT,
+    warrantyPeriod INT NOT NULL,
+    FOREIGN KEY (typeID) REFERENCES Type(id)
+);
+
+CREATE TABLE MobilePhone (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    model VARCHAR(255) NOT NULL,
+    brand VARCHAR(100),
+    os VARCHAR(50),
+    warrantyPeriod INT NOT NULL
+);
+
+CREATE TABLE User (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(15),
+    address VARCHAR(255),
+    dateOfBirth DATE,
+    accountid BIGINT,
+    FOREIGN KEY (accountid) REFERENCES Account(id)
+);
+
+CREATE TABLE Cart (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    status VARCHAR(255),
+    totalAmount DECIMAL(10, 2) DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES User(id)
+);
+
+CREATE TABLE CartItem (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    cart_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    quantity INT NOT NULL,
+    FOREIGN KEY (cart_id) REFERENCES Cart(id),
+    FOREIGN KEY (product_id) REFERENCES Product(id)
+);
+
+CREATE TABLE Review (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    product_id BIGINT NOT NULL,
+    rating INT NOT NULL,
+    comment VARCHAR(255),
+    createdAt DATETIME NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES Product(id)
+);
+
+CREATE TABLE Orders (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    cart_id BIGINT,
+    payment_id BIGINT,
+    shipment_id BIGINT,
+    totalAmount DECIMAL(10, 2),
+    orderDate DATETIME,
+    status VARCHAR(255),
+    shippingMethod VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES User(id),
+    FOREIGN KEY (cart_id) REFERENCES Cart(id)
+);
+
+CREATE TABLE Payment (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order_id BIGINT,
+    amount DECIMAL(10, 2),
+    method VARCHAR(255),
+    status VARCHAR(255),
+    paymentDate DATETIME NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES Orders(id)
+);
+
+CREATE TABLE Shipment (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order_id BIGINT,
+    address VARCHAR(255) NOT NULL,
+    shippingMethod VARCHAR(255) NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES Orders(id)
+);
+
+CREATE TABLE Feedback (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userID BIGINT,
+    productID BIGINT,
+    rating INT NOT NULL,
+    comment VARCHAR(255),
+    feedbackDate DATETIME NOT NULL,
+    FOREIGN KEY (userID) REFERENCES User(id),
+    FOREIGN KEY (productID) REFERENCES Product(id)
+);

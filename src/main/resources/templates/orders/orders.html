@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Orders</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+  <h1>Orders</h1>
+</header>
+
+<section>
+  <h2>Order List</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>User</th>
+      <th>Total Amount</th>
+      <th>Status</th>
+      <th>Order Date</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+      <td th:text="${order.id}"></td>
+      <td th:text="${order.user.name}"></td>
+      <td th:text="${order.totalAmount} + ' $'"></td>
+      <td th:text="${order.status}"></td>
+      <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
+      <td>
+        <a th:href="@{/api/orders/{id}(id=${order.id})}">View</a> |
+        <a th:href="@{/api/orders/edit/{id}(id=${order.id})}">Edit</a> |
+        <a th:href="@{/api/orders/delete/{id}(id=${order.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</section>
+
+<footer>
+  <p>&copy; 2025 Online Shop</p>
+</footer>
+</body>
+</html>
